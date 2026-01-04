@@ -343,7 +343,9 @@ async function sync(inputs) {
   let offset = 0;
   const submissions = [];
   const submissions_dict = {};
-  do {
+
+  const submissionsArray = response.data?.data?.submissionList?.submissions ?? [];
+  for (const submission of submissionsArray) {
     log(`Getting submission from LeetCode, offset ${offset}`);
 
     const getSubmissions = async (maxRetries, retryCount = 0) => {
@@ -415,8 +417,7 @@ async function sync(inputs) {
     }
 
     offset += 20;
-  } while (response.data.data.submissionList.hasNext);
-
+  }
   // We have all submissions we want to write to GitHub now.
   // First, get the default branch to write to.
   const repoInfo = await octokit.repos.get({
