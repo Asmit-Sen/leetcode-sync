@@ -14756,7 +14756,7 @@ function addToSubmissions(params) {
     submissions,
   } = params;
 
-  const submissionArray= response.data.data.submissionList.submissions;
+  const submissionArray= Array.isArray(response.data.data.submissionList.submissions) ? response.data.data.submissionList.submissions : [];
 
   for (const submission of submissionArray) {
     submissionTimestamp = Number(submission.timestamp);
